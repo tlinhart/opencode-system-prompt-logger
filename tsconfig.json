@@ -5,6 +5,7 @@
     "moduleResolution": "bundler",
     "target": "esnext",
     "lib": ["esnext"],
+    "declaration": true,
     "skipLibCheck": true,
     "strict": true,
     "noUnusedLocals": true,
