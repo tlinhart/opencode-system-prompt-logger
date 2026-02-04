@@ -27,7 +27,7 @@
     "build": "tsc"
   },
   "peerDependencies": {
-    "@opencode-ai/plugin": ">=1.0.0"
+    "@opencode-ai/plugin": ">=1.1.37"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.14",
