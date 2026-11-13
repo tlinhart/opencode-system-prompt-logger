@@ -1,0 +1,27 @@
+{
+  "file_scan_exclusions": ["**/dist", "..."],
+  "languages": {
+    "TypeScript": {
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true
+      },
+      "format_on_save": "on"
+    },
+    "JSON": {
+      "formatter": {
+        "language_server": {
+          "name": "biome"
+        }
+      },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true
+      },
+      "format_on_save": "on"
+    }
+  }
+}
