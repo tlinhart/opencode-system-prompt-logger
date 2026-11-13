@@ -1,22 +1,27 @@
-import type { Hooks, Plugin } from "@opencode-ai/plugin";
+import { Plugin } from "@opencode/plugin/effect";
+import { Effect } from "effect";
 
-export const SystemPromptLogger: Plugin = async ({ client }) => {
-  return {
-    "experimental.chat.system.transform": async (input, output) => {
-      const message =
-        output.system.map((prompt) => `\n${prompt}`).join("\n-----") || "";
-      await client.app.log({
-        body: {
-          service: "system-prompt-logger",
-          level: "info",
-          message,
-          extra: {
-            sessionID: input.sessionID || "",
-            providerID: input.model.providerID,
-            modelID: input.model.id,
-          },
-        },
-      });
-    },
-  } as Hooks;
-};
+export default Plugin.define({
+  id: "opencode-system-prompt-logger",
+  effect: (ctx) =>
+    Effect.gen(function* () {
+      for (const hook of [
+        "context",
+        "compaction",
+        "generate",
+        "title",
+      ] as const) {
+        yield* ctx.session.hook(hook, (event) =>
+          Effect.logInfo(
+            event.system.map((prompt) => `\n${prompt.text}`).join("\n-----"),
+            {
+              service: "system-prompt-logger",
+              sessionID: event.sessionID,
+              providerID: event.model.providerID,
+              modelID: event.model.id,
+            },
+          ),
+        );
+      }
+    }),
+});

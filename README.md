@@ -4,8 +4,9 @@ OpenCode plugin that logs the system prompt for debugging and inspection.
 
 ## What it does
 
-Every time you send a message in OpenCode, this plugin intercepts the system
-prompt before it's sent to the LLM and logs it. This is useful for:
+Before each model request, this plugin logs the system prompt sent to the LLM.
+It covers regular agent requests, compaction, transient generation and title
+generation. This is useful for:
 
 - Debugging – understanding what instructions the AI is receiving
 - Inspecting `AGENTS.md` – verifying your custom instructions are being loaded
@@ -17,7 +18,7 @@ Add the plugin to your `opencode.json` or `opencode.jsonc`:
 
 ```json
 {
-  "plugin": ["opencode-system-prompt-logger"]
+  "plugins": ["opencode-system-prompt-logger"]
 }
 ```
 
@@ -25,30 +26,31 @@ The plugin will be automatically installed and loaded when OpenCode starts.
 
 ## Usage
 
-Once installed, the system prompt will be logged every time you send a message.
-The log entry includes:
+Once installed, the system prompt will be logged before each model request. The
+log entry includes:
 
 - Session ID
 - Provider ID and model ID
-- Full system prompt content (multiple prompts are separated by `-----`)
+- Full system prompt content (multiple parts are separated by `-----`)
 
-The plugin logs using OpenCode's structured logging system. See the example:
+The plugin uses OpenCode's structured Effect logger. For example:
 
-```
-INFO  2026-01-01T08:00:00 +1ms service=system-prompt-logger sessionID=ses_abc123 providerID=opencode modelID=gpt-5-nano
+```text
+timestamp=2026-01-01T08:00:00.000Z level=INFO run=abc123 message="
 You are a title generator. You output ONLY a thread title. Nothing else.
 ...
+" service=system-prompt-logger sessionID=ses_abc123 providerID=opencode modelID=gpt-5-nano role=server
 ```
 
 To determine the logs location:
 
 ```shell
-opencode debug paths
+opencode debug paths log
 ```
 
 ## Requirements
 
-- OpenCode >= 1.1.37
+- OpenCode >= 2.2.7
 
 ## License
 
