@@ -1,6 +1,6 @@
 {
   "name": "opencode-system-prompt-logger",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "OpenCode plugin that logs system prompt",
   "keywords": [
     "opencode",
@@ -23,17 +23,15 @@
     }
   },
   "files": [
-    "./dist"
+    "dist"
   ],
   "scripts": {
     "biome": "biome check",
     "typecheck": "tsc --noEmit",
     "build": "tsc"
   },
-  "dependencies": {
-    "@opencode/plugin": "2.2.7"
-  },
   "peerDependencies": {
+    "@opencode/plugin": "^2.2.7",
     "effect": "^4.0.1"
   },
   "devDependencies": {

@@ -13,7 +13,7 @@ export default Plugin.define({
       ] as const) {
         yield* ctx.session.hook(hook, (event) =>
           Effect.logInfo(
-            event.system.map((prompt) => `\n${prompt.text}`).join("\n-----"),
+            event.system.map((part) => `\n${part.text}`).join("\n-----"),
             {
               service: "system-prompt-logger",
               sessionID: event.sessionID,
